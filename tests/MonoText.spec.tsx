@@ -5,6 +5,6 @@ describe("MonoText", () => {
   it("renders correctly", () => {
     const text = "Hello World";
     const { getByText } = render(<MonoText>{text}</MonoText>);
-    expect(getByText(text)).toBeTruthy();
+    expect(getByText(text)).toBe(null);
   });
 });
