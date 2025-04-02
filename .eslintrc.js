@@ -1,6 +1,6 @@
 // https://docs.expo.dev/guides/using-eslint/
 module.exports = {
-  extends: ["expo", "prettier", "plugin:jest/all"],
+  extends: ["expo", "prettier", "plugin:jest/recommended", "plugin:jest/style"],
   plugins: ["prettier", "jest"],
   ignorePatterns: ["/dist/*"],
   env: {
