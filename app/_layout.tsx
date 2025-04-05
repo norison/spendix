@@ -4,6 +4,7 @@ import { Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
 import { ThemeProvider } from "@react-navigation/core";
 import { DarkTheme, DefaultTheme } from "@react-navigation/native";
+import "../translations";
 
 export default function RootLayout() {
   const { colorScheme } = useColorScheme();

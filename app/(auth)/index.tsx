@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import { Text } from "@/components/ui/text";
 import { z } from "zod";
 import { Controller, useForm } from "react-hook-form";
@@ -19,15 +19,30 @@ import { Link, LinkText } from "@/components/ui/link";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
 import { GoogleIcon } from "@/assets/icons/google";
 import { HStack } from "@/components/ui/hstack";
+import { useTranslation } from "react-i18next";
+import { translationKeys } from "@/translations";
+import { TFunction } from "i18next";
+import { KeyboardAvoidingView, Platform } from "react-native";
+import { useRouter } from "expo-router";
 
-const signInSchema = z.object({
-  email: z.string().min(1, "Email is required").email(),
-  password: z.string().min(1, "Password is required"),
-});
+const createSignInSchema = (t: TFunction<"translation", undefined>) => {
+  return z.object({
+    email: z
+      .string()
+      .min(1, t(translationKeys.auth.emailRequired))
+      .email(t(translationKeys.auth.emailInvalid)),
+    password: z.string().min(1, t(translationKeys.auth.passwordRequired)),
+  });
+};
 
-type SignInSchemaType = z.infer<typeof signInSchema>;
+type SignInSchemaType = z.infer<ReturnType<typeof createSignInSchema>>;
 
 const SignIn: FC = () => {
+  const { t } = useTranslation();
+  const router = useRouter();
+
+  const signInSchema = useMemo(() => createSignInSchema(t), [t]);
+
   const {
     control,
     handleSubmit,
@@ -42,113 +57,132 @@ const SignIn: FC = () => {
   };
 
   return (
-    <VStack className="w-full h-full px-4 py-safe-or-8" space="xl">
-      <VStack className="w-full" space="md">
-        <Heading className="md:text-center" size="3xl">
-          Sign in
-        </Heading>
-        <Text>Sign in to start using spendix</Text>
-      </VStack>
-
-      <VStack className="w-full" space="xl">
-        <FormControl isInvalid={!!errors?.email} className="w-full">
-          <FormControlLabel>
-            <FormControlLabelText>Email</FormControlLabelText>
-          </FormControlLabel>
-          <Controller
-            defaultValue=""
-            name="email"
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input>
-                <InputField
-                  placeholder="Enter email"
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  autoComplete="email"
-                  textContentType="emailAddress"
-                />
-              </Input>
-            )}
-          />
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              {errors?.email?.message}
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
-        <FormControl isInvalid={!!errors.password} className="w-full">
-          <FormControlLabel>
-            <FormControlLabelText>Password</FormControlLabelText>
-          </FormControlLabel>
-          <Controller
-            defaultValue=""
-            name="password"
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <Input>
-                <InputField
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter password"
-                  value={value}
-                  onChangeText={onChange}
-                  onBlur={onBlur}
-                  returnKeyType="done"
-                  autoCapitalize="none"
-                  keyboardType="visible-password"
-                  autoComplete="password"
-                  textContentType="password"
-                />
-                <InputSlot
-                  onPress={() => setShowPassword(!showPassword)}
-                  className="pr-3"
-                >
-                  <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
-                </InputSlot>
-              </Input>
-            )}
-          />
-          <FormControlError>
-            <FormControlErrorIcon as={AlertCircleIcon} />
-            <FormControlErrorText>
-              {errors?.password?.message}
-            </FormControlErrorText>
-          </FormControlError>
-        </FormControl>
-        <Link>
-          <LinkText className="font-medium text-sm text-primary-700 text-right">
-            Forgot Password?
-          </LinkText>
-        </Link>
-        <VStack className="w-full" space="lg">
-          <Button className="w-full" onPress={handleSubmit(onSubmit)}>
-            <ButtonText className="font-medium">Sign in</ButtonText>
-          </Button>
-          <Button variant="outline" className="w-full gap-1" onPress={() => {}}>
-            <ButtonText className="font-medium">
-              Continue with Google
-            </ButtonText>
-            <ButtonIcon as={GoogleIcon} />
-          </Button>
+    <KeyboardAvoidingView
+      className="h-full w-full"
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <VStack
+        className="w-full h-full justify-center items-center px-2"
+        space="xl"
+      >
+        <VStack className="w-full" space="md">
+          <Heading className="md:text-center" size="3xl">
+            {t(translationKeys.auth.signIn)}
+          </Heading>
+          <Text>{t(translationKeys.auth.welcome)}</Text>
         </VStack>
-        <HStack className="self-center" space="sm">
-          <Text size="md">Don't have an account?</Text>
+
+        <VStack className="w-full" space="xl">
+          <FormControl isInvalid={!!errors?.email} className="w-full">
+            <FormControlLabel>
+              <FormControlLabelText>
+                {t(translationKeys.auth.email)}
+              </FormControlLabelText>
+            </FormControlLabel>
+            <Controller
+              defaultValue=""
+              name="email"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input>
+                  <InputField
+                    placeholder={t(translationKeys.auth.enterEmail)}
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    returnKeyType="done"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    textContentType="emailAddress"
+                  />
+                </Input>
+              )}
+            />
+            <FormControlError>
+              <FormControlErrorIcon as={AlertCircleIcon} />
+              <FormControlErrorText>
+                {errors?.email?.message}
+              </FormControlErrorText>
+            </FormControlError>
+          </FormControl>
+          <FormControl isInvalid={!!errors.password} className="w-full">
+            <FormControlLabel>
+              <FormControlLabelText>
+                {t(translationKeys.auth.password)}
+              </FormControlLabelText>
+            </FormControlLabel>
+            <Controller
+              defaultValue=""
+              name="password"
+              control={control}
+              render={({ field: { onChange, onBlur, value } }) => (
+                <Input>
+                  <InputField
+                    type={showPassword ? "text" : "password"}
+                    placeholder={t(translationKeys.auth.enterPassword)}
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    returnKeyType="done"
+                    autoCapitalize="none"
+                    keyboardType="visible-password"
+                    autoComplete="password"
+                    textContentType="password"
+                    secureTextEntry={!showPassword}
+                  />
+                  <InputSlot
+                    onPress={() => setShowPassword(!showPassword)}
+                    className="pr-3"
+                  >
+                    <InputIcon as={showPassword ? EyeIcon : EyeOffIcon} />
+                  </InputSlot>
+                </Input>
+              )}
+            />
+            <FormControlError>
+              <FormControlErrorIcon as={AlertCircleIcon} />
+              <FormControlErrorText>
+                {errors?.password?.message}
+              </FormControlErrorText>
+            </FormControlError>
+          </FormControl>
           <Link>
-            <LinkText
-              className="font-medium text-primary-700 group-hover/link:text-primary-600  group-hover/pressed:text-primary-700"
-              size="md"
-            >
-              Sign up
+            <LinkText className="font-medium text-sm text-primary-700 text-right">
+              {t(translationKeys.auth.forgotPassword)}
             </LinkText>
           </Link>
-        </HStack>
+          <VStack className="w-full" space="lg">
+            <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+              <ButtonText className="font-medium">
+                {t(translationKeys.auth.signIn)}
+              </ButtonText>
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full gap-1"
+              onPress={() => {}}
+            >
+              <ButtonText className="font-medium">
+                {t(translationKeys.auth.continueWithGoogle)}
+              </ButtonText>
+              <ButtonIcon as={GoogleIcon} />
+            </Button>
+          </VStack>
+          <HStack className="self-center" space="sm">
+            <Text size="md">{t(translationKeys.auth.dontHaveAccount)}</Text>
+            <Link onPress={() => router.push("/signup")}>
+              <LinkText
+                className="font-medium text-primary-700 group-hover/link:text-primary-600  group-hover/pressed:text-primary-700"
+                size="md"
+              >
+                {t(translationKeys.auth.signUp)}
+              </LinkText>
+            </Link>
+          </HStack>
+        </VStack>
       </VStack>
-    </VStack>
+    </KeyboardAvoidingView>
   );
 };
 
