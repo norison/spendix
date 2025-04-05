@@ -58,7 +58,7 @@ const SignIn: FC = () => {
 
   return (
     <KeyboardAvoidingView
-      className="h-full w-full"
+      className="h-full w-full max-w-[440px] self-center"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <VStack
@@ -66,10 +66,10 @@ const SignIn: FC = () => {
         space="xl"
       >
         <VStack className="w-full" space="md">
-          <Heading className="md:text-center" size="3xl">
+          <Heading className="text-center" size="3xl">
             {t(translationKeys.auth.signIn)}
           </Heading>
-          <Text>{t(translationKeys.auth.welcome)}</Text>
+          <Text className="text-center">{t(translationKeys.auth.welcome)}</Text>
         </VStack>
 
         <VStack className="w-full" space="xl">
@@ -147,11 +147,14 @@ const SignIn: FC = () => {
               </FormControlErrorText>
             </FormControlError>
           </FormControl>
-          <Link>
-            <LinkText className="font-medium text-sm text-primary-700 text-right">
-              {t(translationKeys.auth.forgotPassword)}
-            </LinkText>
-          </Link>
+          <HStack className="justify-end">
+            <Link>
+              <LinkText className="font-medium text-primary-700 group-hover/link:text-primary-600 ">
+                {t(translationKeys.auth.forgotPassword)}
+              </LinkText>
+            </Link>
+          </HStack>
+
           <VStack className="w-full" space="lg">
             <Button className="w-full" onPress={handleSubmit(onSubmit)}>
               <ButtonText className="font-medium">
@@ -171,7 +174,7 @@ const SignIn: FC = () => {
           </VStack>
           <HStack className="self-center" space="sm">
             <Text size="md">{t(translationKeys.auth.dontHaveAccount)}</Text>
-            <Link onPress={() => router.push("/signup")}>
+            <Link onPress={() => router.replace("/signup")}>
               <LinkText
                 className="font-medium text-primary-700 group-hover/link:text-primary-600  group-hover/pressed:text-primary-700"
                 size="md"
