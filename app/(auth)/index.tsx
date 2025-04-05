@@ -14,7 +14,6 @@ import {
   FormControlLabelText,
 } from "@/components/ui/form-control";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
-import { Keyboard } from "react-native";
 import { AlertCircleIcon, EyeIcon, EyeOffIcon } from "@/components/ui/icon";
 import { Link, LinkText } from "@/components/ui/link";
 import { Button, ButtonIcon, ButtonText } from "@/components/ui/button";
@@ -42,11 +41,6 @@ const SignIn: FC = () => {
     console.log("data", data);
   };
 
-  const handleKeyPress = () => {
-    Keyboard.dismiss();
-    handleSubmit(onSubmit)();
-  };
-
   return (
     <VStack className="w-full h-full px-4 py-safe-or-8" space="xl">
       <VStack className="w-full" space="md">
@@ -71,7 +65,6 @@ const SignIn: FC = () => {
                   placeholder="Enter email"
                   value={value}
                   onChangeText={onChange}
-                  onSubmitEditing={handleKeyPress}
                   onBlur={onBlur}
                   returnKeyType="done"
                   autoCapitalize="none"
@@ -103,7 +96,6 @@ const SignIn: FC = () => {
                   type={showPassword ? "text" : "password"}
                   placeholder="Enter password"
                   value={value}
-                  onSubmitEditing={handleKeyPress}
                   onChangeText={onChange}
                   onBlur={onBlur}
                   returnKeyType="done"
@@ -135,7 +127,7 @@ const SignIn: FC = () => {
         </Link>
         <VStack className="w-full" space="lg">
           <Button className="w-full" onPress={handleSubmit(onSubmit)}>
-            <ButtonText className="font-medium">Log in</ButtonText>
+            <ButtonText className="font-medium">Sign in</ButtonText>
           </Button>
           <Button variant="outline" className="w-full gap-1" onPress={() => {}}>
             <ButtonText className="font-medium">
