@@ -10,8 +10,13 @@ export const uk = {
     password: "Пароль",
     enterPassword: "Введіть пароль",
     passwordRequired: "Пароль обов'язковий",
+    confirmPassword: "Підтвердити пароль",
+    enterConfirmPassword: "Введіть підтвердження пароля",
+    confirmPasswordRequired: "Підтвердження пароля є обов'язковим",
+    passwordsDontMatch: "Паролі не збігаються",
     forgotPassword: "Забули пароль?",
     dontHaveAccount: "Немає облікового запису?",
+    alreadyHaveAccount: "Вже маєте акаунт?",
     continueWithGoogle: "Продовжити з Google",
   },
 };

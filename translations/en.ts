@@ -10,8 +10,13 @@ export const en = {
     password: "Password",
     enterPassword: "Enter password",
     passwordRequired: "Password is required",
+    confirmPassword: "Confirm password",
+    enterConfirmPassword: "Enter confirm password",
+    confirmPasswordRequired: "Confirm password is required",
+    passwordsDontMatch: "Passwords do not match",
     forgotPassword: "Forgot Password?",
     dontHaveAccount: "Don't have an account?",
+    alreadyHaveAccount: "Already have an account?",
     continueWithGoogle: "Continue with Google",
   },
 };

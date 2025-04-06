@@ -58,13 +58,10 @@ const SignIn: FC = () => {
 
   return (
     <KeyboardAvoidingView
-      className="h-full w-full max-w-[440px] self-center"
+      className="h-full w-full max-w-[440px] justify-center self-center px-2"
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <VStack
-        className="w-full h-full justify-center items-center px-2"
-        space="xl"
-      >
+      <VStack space="xl">
         <VStack className="w-full" space="md">
           <Heading className="text-center" size="3xl">
             {t(translationKeys.auth.signIn)}
@@ -126,7 +123,6 @@ const SignIn: FC = () => {
                     onBlur={onBlur}
                     returnKeyType="done"
                     autoCapitalize="none"
-                    keyboardType="visible-password"
                     autoComplete="password"
                     textContentType="password"
                     secureTextEntry={!showPassword}

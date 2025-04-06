@@ -20,8 +20,13 @@ export const translationKeys = {
     password: "auth.password",
     enterPassword: "auth.enterPassword",
     passwordRequired: "auth.passwordRequired",
+    confirmPassword: "auth.confirmPassword",
+    enterConfirmPassword: "auth.enterConfirmPassword",
+    confirmPasswordRequired: "auth.confirmPasswordRequired",
+    passwordsDontMatch: "auth.passwordsDontMatch",
     forgotPassword: "auth.forgotPassword",
     dontHaveAccount: "auth.dontHaveAccount",
+    alreadyHaveAccount: "auth.alreadyHaveAccount",
     continueWithGoogle: "auth.continueWithGoogle",
   },
 };
