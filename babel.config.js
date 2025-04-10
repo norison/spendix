@@ -13,6 +13,7 @@ module.exports = function (api) {
     ],
 
     plugins: [
+      "transform-inline-environment-variables",
       [
         "module-resolver",
         {
