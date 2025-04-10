@@ -52,10 +52,6 @@ const SignIn: FC = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: SignInSchemaType) => {
-    console.log("data", data);
-  };
-
   return (
     <KeyboardAvoidingView
       className="h-full w-full max-w-[440px] justify-center self-center px-2"
@@ -152,7 +148,7 @@ const SignIn: FC = () => {
           </HStack>
 
           <VStack className="w-full" space="lg">
-            <Button className="w-full" onPress={handleSubmit(onSubmit)}>
+            <Button className="w-full" onPress={handleSubmit(() => {})}>
               <ButtonText className="font-medium">
                 {t(translationKeys.auth.signIn)}
               </ButtonText>

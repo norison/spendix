@@ -1,5 +1,5 @@
 import "@/global.css";
-import "../translations";
+import "@/translations";
 import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { SplashScreen, Stack } from "expo-router";
 import { useColorScheme } from "nativewind";
@@ -24,23 +24,22 @@ export default function RootLayout() {
   }, [i18n]);
 
   useEffect(() => {
-    setLanguage().then(() => SplashScreen.hideAsync());
-  }, [setLanguage]);
+    const appStateChangeSubscription = AppState.addEventListener(
+      "change",
+      setLanguage,
+    );
 
-  useEffect(() => {
-    const subscription = AppState.addEventListener("change", setLanguage);
+    SplashScreen.hide();
 
-    return () => {
-      subscription.remove();
-    };
+    return () => appStateChangeSubscription.remove();
   }, [setLanguage]);
 
   return (
     <GluestackUIProvider mode={colorScheme}>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(auth)" />
           <Stack.Screen name="(main)" />
+          <Stack.Screen name="(auth)" />
         </Stack>
       </ThemeProvider>
     </GluestackUIProvider>
