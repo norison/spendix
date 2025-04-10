@@ -24,6 +24,14 @@ import { translationKeys } from "@/translations";
 import { TFunction } from "i18next";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
+import { createUserWithEmailAndPassword } from "@firebase/auth";
+import { auth } from "@/config/firebase";
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  useToast,
+} from "@/components/ui/toast";
 
 const createSignInSchema = (t: TFunction<"translation", undefined>) => {
   return z
@@ -48,6 +56,7 @@ type SignUpSchemaType = z.infer<ReturnType<typeof createSignInSchema>>;
 const SignUp: FC = () => {
   const { t } = useTranslation();
   const router = useRouter();
+  const toast = useToast();
 
   const signInSchema = useMemo(() => createSignInSchema(t), [t]);
 
@@ -61,8 +70,26 @@ const SignUp: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const onSubmit = (data: SignUpSchemaType) => {
-    console.log("data", data);
+  const onSubmit = async (data: SignUpSchemaType) => {
+    try {
+      await createUserWithEmailAndPassword(auth, data.email, data.password);
+    } catch (error) {
+      console.log("Error creating user:", error);
+      toast.show({
+        placement: "top",
+        render: ({ id }) => {
+          const uniqueToastId = "toast-" + id;
+          return (
+            <Toast nativeID={uniqueToastId} action="muted" variant="solid">
+              <ToastTitle>Sign up failed</ToastTitle>
+              <ToastDescription>
+                {error instanceof Error ? error.message : "Unknown error"}
+              </ToastDescription>
+            </Toast>
+          );
+        },
+      });
+    }
   };
 
   return (
