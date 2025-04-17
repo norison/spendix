@@ -13,12 +13,17 @@
       "resizeMode": "contain"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.norison.spendix",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png"
-      }
+      },
+      "package": "com.norison.spendix"
     },
     "web": {
       "favicon": "./src/assets/favicon.png",
@@ -26,6 +31,15 @@
     },
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0b87999a-11a6-4136-9f12-7966e0e80699"
+      }
+    },
+    "owner": "norison"
   }
 }
