@@ -1,11 +1,12 @@
 import { FC } from "react";
-import { Text, View } from "react-native";
+import { Box } from "@/src/components/ui/box";
+import { Text } from "@/src/components/ui/text";
 
 const Settings: FC = () => {
   return (
-    <View>
-      <Text>Settings</Text>
-    </View>
+    <Box className="bg-background-0 w-full h-full flex justify-center items-center">
+      <Text size="4xl">Settings</Text>
+    </Box>
   );
 };
 
