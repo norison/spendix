@@ -8,6 +8,7 @@ import { Box } from "@/src/components/ui/box";
 import { Heading } from "@/src/components/ui/heading";
 import { Text } from "@/src/components/ui/text";
 import { GlobeIcon, Icon, SettingsIcon } from "@/src/components/ui/icon";
+import { Platform } from "react-native";
 
 const RootLayout: FC = () => {
   const { colorScheme } = useColorScheme();
@@ -25,6 +26,9 @@ const RootLayout: FC = () => {
           ),
           tabBarStyle: {
             borderTopWidth: 0,
+            elevation: 0,
+            position: "absolute",
+            bottom: Platform.OS === "android" ? 15 : 0,
           },
           headerTitle: ({ children }) => <Heading>{children}</Heading>,
           tabBarLabel: ({ children, focused }) => (
@@ -40,6 +44,7 @@ const RootLayout: FC = () => {
             title: "Home",
             tabBarIcon: ({ focused }) => (
               <Icon
+                size="xl"
                 className={focused ? "text-tertiary-600" : "text-primary-0"}
                 as={GlobeIcon}
               />
@@ -52,6 +57,7 @@ const RootLayout: FC = () => {
             title: "Settings",
             tabBarIcon: ({ focused }) => (
               <Icon
+                size="xl"
                 className={focused ? "text-tertiary-600" : "text-primary-0"}
                 as={SettingsIcon}
               />
