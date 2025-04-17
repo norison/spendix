@@ -4,8 +4,8 @@
   "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watchAll --passWithNoTests",
@@ -31,12 +31,14 @@
     "react-dom": "18.3.1",
     "react-native": "0.76.9",
     "react-native-css-interop": "^0.1.22",
-    "react-native-reanimated": "^3.17.4",
-    "react-native-safe-area-context": "^5.4.0",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
-    "react-native-svg": "^15.2.0",
+    "react-native-svg": "15.8.0",
     "react-native-web": "~0.19.13",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "expo-dev-client": "~5.0.20",
+    "expo-system-ui": "~4.0.9"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -53,5 +55,12 @@
     "prettier": "^3.5.3",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
+  }
 }
