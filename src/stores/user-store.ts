@@ -1,14 +1,16 @@
 import { injectable } from "inversify";
-import { makeAutoObservable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 
 @injectable()
 export class UserStore {
+  @observable
   public email: string = "";
 
   constructor() {
-    makeAutoObservable(this);
+    makeObservable(this);
   }
 
+  @action
   public setEmail(email: string) {
     this.email = email;
   }
