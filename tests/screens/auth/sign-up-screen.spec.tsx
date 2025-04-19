@@ -1,9 +1,9 @@
 import { render } from "@testing-library/react-native";
 import SignUp from "@/src/screens/auth/sign-up";
 
-describe("SignUpScreen", () => {
+describe("SignUp", () => {
   it("renders without crashing", () => {
     const { queryByText } = render(<SignUp />);
-    expect(queryByText("Sign Up")).not.toBeNull();
+    expect(queryByText("Sign up")).not.toBeNull();
   });
 });

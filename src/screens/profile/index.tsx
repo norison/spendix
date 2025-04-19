@@ -4,6 +4,7 @@ import { Text } from "react-native";
 import { useUserStore } from "@/src/container";
 import { Button, ButtonText } from "@/src/components/ui/button";
 import { VStack } from "@/src/components/ui/vstack";
+import { observer } from "mobx-react-lite";
 
 const Profile: FC = () => {
   const userStore = useUserStore();
@@ -18,4 +19,4 @@ const Profile: FC = () => {
   );
 };
 
-export default Profile;
+export default observer(Profile);
